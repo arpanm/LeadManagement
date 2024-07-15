@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { ILead } from 'app/shared/model/lead.model';
+import { getEntities as getLeads } from 'app/entities/lead/lead.reducer';
 import { IInterest } from 'app/shared/model/interest.model';
 import { getEntity, updateEntity, createEntity, reset } from './interest.reducer';
 
@@ -19,6 +21,7 @@ export const InterestUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const leads = useAppSelector(state => state.lead.entities);
   const interestEntity = useAppSelector(state => state.interest.entity);
   const loading = useAppSelector(state => state.interest.loading);
   const updating = useAppSelector(state => state.interest.updating);
@@ -32,6 +35,8 @@ export const InterestUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
+
+    dispatch(getLeads({}));
   }, []);
 
   useEffect(() => {
@@ -51,6 +56,7 @@ export const InterestUpdate = () => {
     const entity = {
       ...interestEntity,
       ...values,
+      lead: leads.find(it => it.id.toString() === values.lead?.toString()),
     };
 
     if (isNew) {
@@ -70,6 +76,7 @@ export const InterestUpdate = () => {
           ...interestEntity,
           createdAt: convertDateTimeFromServer(interestEntity.createdAt),
           updatedAt: convertDateTimeFromServer(interestEntity.updatedAt),
+          lead: interestEntity?.lead?.id,
         };
 
   return (
@@ -166,6 +173,22 @@ export const InterestUpdate = () => {
                 data-cy="updatedBy"
                 type="text"
               />
+              <ValidatedField
+                id="interest-lead"
+                name="lead"
+                data-cy="lead"
+                label={translate('leadManagementApp.interest.lead')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {leads
+                  ? leads.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/interest" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

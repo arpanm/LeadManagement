@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -54,10 +52,9 @@ public class Interest implements Serializable {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "interest")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "interest" }, allowSetters = true)
-    private Set<Lead> leads = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "interests" }, allowSetters = true)
+    private Lead lead;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -191,34 +188,16 @@ public class Interest implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public Set<Lead> getLeads() {
-        return this.leads;
+    public Lead getLead() {
+        return this.lead;
     }
 
-    public void setLeads(Set<Lead> leads) {
-        if (this.leads != null) {
-            this.leads.forEach(i -> i.setInterest(null));
-        }
-        if (leads != null) {
-            leads.forEach(i -> i.setInterest(this));
-        }
-        this.leads = leads;
+    public void setLead(Lead lead) {
+        this.lead = lead;
     }
 
-    public Interest leads(Set<Lead> leads) {
-        this.setLeads(leads);
-        return this;
-    }
-
-    public Interest addLead(Lead lead) {
-        this.leads.add(lead);
-        lead.setInterest(this);
-        return this;
-    }
-
-    public Interest removeLead(Lead lead) {
-        this.leads.remove(lead);
-        lead.setInterest(null);
+    public Interest lead(Lead lead) {
+        this.setLead(lead);
         return this;
     }
 

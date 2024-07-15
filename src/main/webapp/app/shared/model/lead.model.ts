@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { IInterest } from 'app/shared/model/interest.model';
 
 export interface ILead {
   id?: number;
@@ -9,7 +8,6 @@ export interface ILead {
   createdBy?: string | null;
   updatedAt?: dayjs.Dayjs | null;
   updatedBy?: string | null;
-  interest?: IInterest | null;
 }
 
 export const defaultValue: Readonly<ILead> = {};

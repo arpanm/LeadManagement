@@ -68,10 +68,6 @@ export const LeadDetail = () => {
             </span>
           </dt>
           <dd>{leadEntity.updatedBy}</dd>
-          <dt>
-            <Translate contentKey="leadManagementApp.lead.interest">Interest</Translate>
-          </dt>
-          <dd>{leadEntity.interest ? leadEntity.interest.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/lead" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
