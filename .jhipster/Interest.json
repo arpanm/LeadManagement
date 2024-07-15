@@ -48,10 +48,9 @@
   "relationships": [
     {
       "otherEntityName": "lead",
-      "otherEntityRelationshipName": "interest",
       "relationshipName": "lead",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

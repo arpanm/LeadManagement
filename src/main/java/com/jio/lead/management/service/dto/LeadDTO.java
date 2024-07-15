@@ -29,8 +29,6 @@ public class LeadDTO implements Serializable {
 
     private String updatedBy;
 
-    private InterestDTO interest;
-
     public Long getId() {
         return id;
     }
@@ -87,14 +85,6 @@ public class LeadDTO implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public InterestDTO getInterest() {
-        return interest;
-    }
-
-    public void setInterest(InterestDTO interest) {
-        this.interest = interest;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -127,7 +117,6 @@ public class LeadDTO implements Serializable {
             ", createdBy='" + getCreatedBy() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
-            ", interest=" + getInterest() +
             "}";
     }
 }

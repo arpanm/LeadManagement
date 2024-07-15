@@ -64,5 +64,9 @@ public class InterestAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertInterestUpdatableRelationshipsEquals(Interest expected, Interest actual) {}
+    public static void assertInterestUpdatableRelationshipsEquals(Interest expected, Interest actual) {
+        assertThat(expected)
+            .as("Verify Interest relationships")
+            .satisfies(e -> assertThat(e.getLead()).as("check lead").isEqualTo(actual.getLead()));
+    }
 }

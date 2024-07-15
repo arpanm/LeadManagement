@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -46,9 +48,10 @@ public class Lead implements Serializable {
     @Column(name = "updated_by")
     private String updatedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "leads" }, allowSetters = true)
-    private Interest interest;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lead")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "lead" }, allowSetters = true)
+    private Set<Interest> interests = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -143,16 +146,34 @@ public class Lead implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public Interest getInterest() {
-        return this.interest;
+    public Set<Interest> getInterests() {
+        return this.interests;
     }
 
-    public void setInterest(Interest interest) {
-        this.interest = interest;
+    public void setInterests(Set<Interest> interests) {
+        if (this.interests != null) {
+            this.interests.forEach(i -> i.setLead(null));
+        }
+        if (interests != null) {
+            interests.forEach(i -> i.setLead(this));
+        }
+        this.interests = interests;
     }
 
-    public Lead interest(Interest interest) {
-        this.setInterest(interest);
+    public Lead interests(Set<Interest> interests) {
+        this.setInterests(interests);
+        return this;
+    }
+
+    public Lead addInterest(Interest interest) {
+        this.interests.add(interest);
+        interest.setLead(this);
+        return this;
+    }
+
+    public Lead removeInterest(Interest interest) {
+        this.interests.remove(interest);
+        interest.setLead(null);
         return this;
     }
 

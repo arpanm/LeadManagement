@@ -40,9 +40,10 @@
   "relationships": [
     {
       "otherEntityName": "interest",
+      "otherEntityRelationshipName": "lead",
       "relationshipName": "interest",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

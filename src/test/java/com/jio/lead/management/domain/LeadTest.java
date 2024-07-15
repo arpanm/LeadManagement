@@ -5,6 +5,8 @@ import static com.jio.lead.management.domain.LeadTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jio.lead.management.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class LeadTest {
@@ -28,10 +30,20 @@ class LeadTest {
         Lead lead = getLeadRandomSampleGenerator();
         Interest interestBack = getInterestRandomSampleGenerator();
 
-        lead.setInterest(interestBack);
-        assertThat(lead.getInterest()).isEqualTo(interestBack);
+        lead.addInterest(interestBack);
+        assertThat(lead.getInterests()).containsOnly(interestBack);
+        assertThat(interestBack.getLead()).isEqualTo(lead);
 
-        lead.interest(null);
-        assertThat(lead.getInterest()).isNull();
+        lead.removeInterest(interestBack);
+        assertThat(lead.getInterests()).doesNotContain(interestBack);
+        assertThat(interestBack.getLead()).isNull();
+
+        lead.interests(new HashSet<>(Set.of(interestBack)));
+        assertThat(lead.getInterests()).containsOnly(interestBack);
+        assertThat(interestBack.getLead()).isEqualTo(lead);
+
+        lead.setInterests(new HashSet<>());
+        assertThat(lead.getInterests()).doesNotContain(interestBack);
+        assertThat(interestBack.getLead()).isNull();
     }
 }

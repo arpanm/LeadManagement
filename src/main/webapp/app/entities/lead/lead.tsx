@@ -155,9 +155,6 @@ export const Lead = () => {
                     <Translate contentKey="leadManagementApp.lead.updatedBy">Updated By</Translate>{' '}
                     <FontAwesomeIcon icon={getSortIconByFieldName('updatedBy')} />
                   </th>
-                  <th>
-                    <Translate contentKey="leadManagementApp.lead.interest">Interest</Translate> <FontAwesomeIcon icon="sort" />
-                  </th>
                   <th />
                 </tr>
               </thead>
@@ -175,7 +172,6 @@ export const Lead = () => {
                     <td>{lead.createdBy}</td>
                     <td>{lead.updatedAt ? <TextFormat type="date" value={lead.updatedAt} format={APP_DATE_FORMAT} /> : null}</td>
                     <td>{lead.updatedBy}</td>
-                    <td>{lead.interest ? <Link to={`/interest/${lead.interest.id}`}>{lead.interest.id}</Link> : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/lead/${lead.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -51,8 +51,8 @@ public class CacheConfiguration {
             createCache(cm, com.jio.lead.management.domain.Authority.class.getName());
             createCache(cm, com.jio.lead.management.domain.User.class.getName() + ".authorities");
             createCache(cm, com.jio.lead.management.domain.Lead.class.getName());
+            createCache(cm, com.jio.lead.management.domain.Lead.class.getName() + ".interests");
             createCache(cm, com.jio.lead.management.domain.Interest.class.getName());
-            createCache(cm, com.jio.lead.management.domain.Interest.class.getName() + ".leads");
             // jhipster-needle-ehcache-add-entry
         };
     }
