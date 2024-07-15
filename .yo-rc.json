@@ -1,0 +1,22 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "LeadManagement",
+    "buildTool": "maven",
+    "clientFramework": "react",
+    "clientPackageManager": "npm",
+    "devServerPort": 9060,
+    "enableSwaggerCodegen": true,
+    "entities": ["Lead", "Interest"],
+    "jhipsterVersion": "8.6.0",
+    "jwtSecretKey": "M2VjMjJhMTIzYWQyMTQzZmZkNzBjNmI1YzViZTI5YjcxYTZmYjVkOGE2ZWNiNGM2N2UzNjA4Zjk4ZDM2ZDIyOWIyMzJkMzBlOWRkYjY4ZjA3MjZiZDE5M2MyNzE2NWNjOTNiNTg0YTgyOWRhNzdhYTEzZmZmYWU1YTEyOTAzMzY=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1721033782000,
+    "nativeLanguage": "en",
+    "packageFolder": "com/jio/lead/management",
+    "packageName": "com.jio.lead.management",
+    "prodDatabaseType": "mysql",
+    "serverPort": "9001"
+  }
+}
