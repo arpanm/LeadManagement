@@ -21,7 +21,7 @@ entity Interest {
  
  
 relationship OneToMany {
-	Interest to Lead{interest}
+	Lead to Interest {lead}
 }
  
 application {
