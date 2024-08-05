@@ -1,12 +1,14 @@
+
 entity Lead {
 	name String required
     phone Long required min(1000000000) max(9999999999)
+    leadSource LeadSource
     createdAt Instant
     createdBy String
     updatedAt Instant
     updatedBy String
 }
- 
+
 entity Interest {
 	category String required
     brand String
@@ -18,24 +20,81 @@ entity Interest {
     updatedAt Instant
     updatedBy String
 }
- 
- 
-relationship OneToMany {
-	Lead to Interest {lead}
+
+entity Disposition {
+	assignedDate Instant
+	activityDate Instant
+	activityStatus ActivityStatus
+	notes String
+	callbackDate Instant
+	assignedDifferentStoreId String
+	recommendedAction String
+    createdAt Instant
+    createdBy String
+    updatedAt Instant
+    updatedBy String
 }
- 
+
+entity Store {
+	name String
+    phone Long min(1000000000) max(9999999999)
+    city String
+    state String
+    pincode Integer
+    createdAt Instant
+    createdBy String
+    updatedAt Instant
+    updatedBy String
+}
+
+entity StoreUser {
+	userId String
+    name String
+    phone Long min(1000000000) max(9999999999)
+}
+
+enum LeadSource {
+    STORE_MANAGER,
+    RD_IN,
+    MANUAL_UPLOAD
+}
+
+enum ActivityStatus {
+    ASSIGNED,
+    NOT_PICKED,
+    NOT_INTERESTED,
+    CALLBACK_REQUESTED,
+    ALREADY_PURCHASED,
+    INTERESTED,
+    CONVERTED,
+    ASSIGNED_TO_DIFFERENT_STORE
+}
+
+relationship OneToMany {
+	Lead to Interest{lead}
+}
+
+relationship OneToOne {
+	Lead to Disposition{lead}
+    StoreUser to Disposition{storeUser}
+}
+
+relationship OneToMany {
+	Store to StoreUser{store}
+}
+
 application {
   config {
     baseName LeadManagement
     applicationType monolith
     serverPort 9001
-    prodDatabaseType mysql
+    prodDatabaseType postgresql
     clientFramework react
     clientPackageManager npm
     authenticationType jwt
     buildTool maven
     enableSwaggerCodegen true
-    packageName com.jio.lead.management
+    packageName com.jio.leadmanagement
   }
   entities *
   dto * with mapstruct
